@@ -52,10 +52,10 @@ def iterate_the_data_using_coordinates(data):
 def fetch_value_using_coordinates(img, top, left, width, height):
     # roi
     roi = img[top:top + height, left:left + width]
-    print(top)
-    print(top+height)
-    print(left)
-    print(left+width)
+    print("top" ,top)
+    print("top+height" ,top+height)
+    print("left", left)
+    print("left+width" , left+width)
     text = pytesseract.image_to_string(roi)
     print("text ---> ", text)
     # return text
