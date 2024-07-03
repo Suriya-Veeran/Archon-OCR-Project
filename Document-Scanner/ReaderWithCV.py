@@ -3,15 +3,15 @@ import pytesseract
 from pdf2image import convert_from_path
 import numpy as np
 
-pdf_path = r"C:\Users\P3INW82\IdeaProjects\Archon-OCR-Project\Document-PDF\deposit slip.pdf"
+pdf_path = r"/home/p3/IdeaProjects/OCR-Project/DepositSlip/Adobe Scan 2 Jul 2024-1.pdf"
 
 # Convert PDF to images
 pages = convert_from_path(pdf_path)
 
-width = 125
-height = 28
-top = 1737
-left = 659
+width = 202
+height = 58
+top = 115
+left = 143
 
 
 def convert_image_to_text(file):
@@ -46,23 +46,26 @@ def iterate_the_data_using_coordinates(data):
             zip(data['text'], data['left'], data['top'], data['width'], data['height'])):
         if text.strip():  # Ensure it's not an empty string
 
-            # Extract text and additional information as needed
             print(f"Text: {text}, Left: {left}, Top: {top}, Width: {width}, Height: {height}")
 
 
 def fetch_value_using_coordinates(img, top, left, width, height):
     # roi
     roi = img[top:top + height, left:left + width]
+    print(top)
+    print(top+height)
+    print(left)
+    print(left+width)
     text = pytesseract.image_to_string(roi)
     print("text ---> ", text)
-    return text
+    # return text
 
 
 def process_page(page):
     img = cv2.cvtColor(np.array(page), cv2.COLOR_RGB2BGR)
-    #data = convert_image_to_text(img)
-    #iterate_the_data_using_coordinates(data)
-    fetch_value_using_coordinates(img, top, left, width, height)
+    data = convert_image_to_text(img)
+    iterate_the_data_using_coordinates(data)
+    #fetch_value_using_coordinates(img, top, left, width, height)
 
 
 # Process each page
