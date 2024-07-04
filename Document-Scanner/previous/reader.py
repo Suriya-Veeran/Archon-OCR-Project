@@ -5,7 +5,7 @@ from pytesseract import image_to_boxes
 import cv2
 import pytesseract
 
-path_to_pdf = r"/home/p3/IdeaProjects/OCR-Project/Document-PDF/deposit slip.pdf"
+path_to_pdf = r"/Document-PDF/deposit slip.pdf"
 
 
 def convert_pdf_to_img(pdffile):

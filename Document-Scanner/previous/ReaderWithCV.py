@@ -3,7 +3,7 @@ import pytesseract
 from pdf2image import convert_from_path
 import numpy as np
 
-pdf_path = r"/home/p3/IdeaProjects/OCR-Project/DepositSlip/Adobe Scan 2 Jul 2024-1.pdf"
+pdf_path = r"/DepositSlip/Adobe Scan 2 Jul 2024-1.pdf"
 
 # Convert PDF to images
 pages = convert_from_path(pdf_path)
