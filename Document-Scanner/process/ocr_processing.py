@@ -1,6 +1,14 @@
 import cv2
 from paddleocr import PaddleOCR
 from data_classes import prepare_response_bean
+import logging
+
+# Configure the root logger
+logging.basicConfig(level=logging.ERROR)
+
+# Configure the PaddleOCR logger
+logger = logging.getLogger('ppocr')
+logger.setLevel(logging.ERROR)
 
 
 def is_bounding_box_within(bounding_box, position):
@@ -35,7 +43,6 @@ def fetch_value_using_coordinates(img, bean):
     height = bean.position.height
     top = bean.position.x
     left = bean.position.y
-    print(result)
     for i in range(len(result[0])):
         i_ = result[0][i][0]
         flag = is_bounding_box_within(i_, {'x': top, 'y': left, 'width': width, 'height': height})
