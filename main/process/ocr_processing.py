@@ -1,4 +1,5 @@
 import cv2
+import numpy
 from paddleocr import PaddleOCR
 from data_classes import prepare_response_bean
 import logging

@@ -2,14 +2,19 @@ import cv2
 import numpy as np
 from pdf2image import convert_from_path
 
-from main.process.pre_process.image_preprocessor import ImagePreprocessor
+from image_preprocessor import ImagePreprocessor
 from ocr_processing import fetch_value_using_coordinates
+
 
 
 def process_image(image_path, bean):
     preprocessor = ImagePreprocessor()
     processed_image_path = preprocessor.preprocess_image(image_path)
     print(f"Preprocessed image saved at: {processed_image_path}")
+    # image = cv2.imread(processed_image_path)
+    # print(type(image))
+    # pre_processed_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # print(type(pre_processed_image))
     fetch_value_using_coordinates(processed_image_path, bean)
 
 
