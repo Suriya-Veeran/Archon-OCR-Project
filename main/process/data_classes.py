@@ -40,7 +40,7 @@ class Response:
 
 def prepare_response_bean(binding_name, value):
     res = Response(binding_name, value)
-    print(res)
+    print("response ----> ", res)
 
 
 

@@ -1,8 +1,26 @@
 import json
-from pdf_processing import convert_pdf_to_images, process_page
+from pdf_processing import convert_pdf_to_images, process_page, process_image
 from data_classes import parse_json_to_bean
 
-pdf_path = r"/home/p3/IdeaProjects/OCR-Project/DepositSlip/Adobe Scan 2 Jul 2024-1.pdf"
+# pdf_path = r"/resources/DepositSlip/Adobe Scan 2 Jul 2024-1.pdf"
+img_path = r"/home/p3/IdeaProjects/OCR-Project/resources/img.png"
+
+json_Sample = '''
+[
+  {
+    "columnName": "data binding",
+    "position": {
+      "x": 100,
+      "y": 82,
+      "width": 221,
+      "height": 55
+    }
+  }
+]
+
+'''
+
+
 json_string = '''
 [
     {
@@ -13,6 +31,7 @@ json_string = '''
             "width": 315,
             "height": 80
         }
+        
     },
     {
     "columnName": "amount name",
@@ -37,15 +56,21 @@ json_string = '''
 '''
 
 # Parse the JSON string
-json_data = json.loads(json_string)
+# json_data = json.loads(json_string)
+json_data = json.loads(json_Sample)
 
 # Convert JSON to Bean objects
 beans = parse_json_to_bean(json_data)
 
 # PDF processing
-pdf_pages = convert_pdf_to_images(pdf_path)
+# pdf_pages = convert_pdf_to_images(pdf_path)
 
-# Output the parsed beans
+# image processing
 for bean in beans:
-    for page in pdf_pages:
-        process_page(page, bean)
+    process_image(img_path,bean)
+
+
+# # Output the parsed beans
+# for bean in beans:
+#     for page in pdf_pages:
+#         process_page(page, bean)
