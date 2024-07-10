@@ -4,7 +4,7 @@ from data_classes import parse_json_to_bean
 from pdf_processing import process_image
 
 
-img_path = r"/home/p3/IdeaProjects/OCR-Project/resources/img_1.png"
+img_path = r"/home/p3/IdeaProjects/OCR-Project/resources/img.png"
 json_Sample = '''
     [
       {

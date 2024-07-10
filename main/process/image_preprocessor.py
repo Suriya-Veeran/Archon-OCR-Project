@@ -4,6 +4,7 @@ from PIL import Image
 import tempfile
 import logging
 
+
 class ImagePreprocessor:
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
@@ -116,9 +117,7 @@ class ImagePreprocessor:
             preprocessed_image_path = tempfile.NamedTemporaryFile(delete=False, suffix='.png').name
             print(preprocessed_image_path)
             cv2.imwrite(preprocessed_image_path, img)
-            self.logger.info("Image preprocessing complete")
             return img
         except Exception as e:
             self.logger.error(f"Error in preprocessing image: {e}")
             raise
-
