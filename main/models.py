@@ -15,18 +15,7 @@ class Bean:
         self.position = position
 
     def __repr__(self):
-        return f"Bean(columnName={self.column_name}, position={self.position})"
-
-
-def parse_json_to_bean(json_data):
-    beans = []
-    for item in json_data:
-        column_name = item["columnName"]
-        position_data = item["position"]
-        position = ColumnPosition(**position_data)
-        bean = Bean(column_name, position)
-        beans.append(bean)
-    return beans
+        return f"Bean(column_name={self.column_name}, position={self.position})"
 
 
 class Response:
@@ -35,13 +24,4 @@ class Response:
         self.value = value
 
     def __repr__(self):
-        return f"Bean(binding_name={self.binding_name}, value={self.value})"
-
-
-def prepare_response_bean(binding_name, value):
-    res = Response(binding_name, value)
-    print("response ----> ", res)
-
-
-
-
+        return f"Response(binding_name={self.binding_name}, value={self.value})"
