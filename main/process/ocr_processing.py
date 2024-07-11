@@ -40,6 +40,7 @@ def fetch_value_using_coordinates(img, bean):
     thresh = 255 - cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     ocr = PaddleOCR(use_angle_cls=True, lang='en', det_lang='ml')
     result = ocr.ocr(thresh, cls=True)
+    print(result)
     width = bean.position.width
     height = bean.position.height
     top = bean.position.x
@@ -52,18 +53,35 @@ def fetch_value_using_coordinates(img, bean):
             position = top_position + height_position
             position_width_position = left_position + width_position
             roi = thresh[top_position:position, left_position:position_width_position]
-            cv2.imwrite("sample.png", thresh)
+            cv2.imwrite("sample.png", roi)
             res = ocr.ocr(roi, cls=True)
-
-            if res is None:
-                print("OCR result is None.")
-            elif isinstance(res, list) and len(res) > 0:
-                if isinstance(res[0], list) and len(res[0]) > 0:
-                    accuracy = res[0][0][1][1]
-                    if accuracy > 0.75:
-                        value = res[0][0][1][0]
-                        prepare_response_bean(bean.column_name, value)
-                else:
-                    print("No valid text detected in the ROI or result is empty.")
+            if res[0] is None:
+                print("OCR failed to recognize text in ROI")
             else:
-                print("result set is empty")
+                accuracy = res[0][0][1][1]
+                if accuracy > 0.75:
+                    value = res[0][0][1][0]
+                    prepare_response_bean(bean.column_name, value)
+
+
+
+            # print("bounding result -> ", res)
+            # accuracy = res[0][0][1][1]
+            # if accuracy > 0.75:
+            #     value = res[0][0][1][0]
+            #     prepare_response_bean(bean.column_name, value)
+
+
+
+            # if res is None:
+            #     print("OCR result is None.")
+            # elif isinstance(res, list) and len(res) > 0:
+            #     if isinstance(res[0], list) and len(res[0]) > 0:
+            #         accuracy = res[0][0][1][1]
+            #         if accuracy > 0.75:
+            #             value = res[0][0][1][0]
+            #             prepare_response_bean(bean.column_name, value)
+            #     else:
+            #         print(f"OCR result found but accuracy is below threshold.")
+            # else:
+            #     print("No valid text detected in the ROI or result is empty.")

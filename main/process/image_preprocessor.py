@@ -112,7 +112,7 @@ class ImagePreprocessor:
             img = self.remove_noise(img)
             img = self.get_grayscale(img)
             img = self.normalize_image(img)
-            img = self.deskew(img)
+            # img = self.deskew(img)
             img = self.thresholding(img)
             preprocessed_image_path = tempfile.NamedTemporaryFile(delete=False, suffix='.png').name
             print(preprocessed_image_path)
