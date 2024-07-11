@@ -1,7 +1,8 @@
 import json
 
+import cv2
+
 from data_classes import parse_json_to_bean
-from image_preprocessor import ImagePreprocessor
 from ocr_processing import fetch_value_using_coordinates
 
 img_path = r"/home/p3/IdeaProjects/OCR-Project/resources/images/test.png"
@@ -43,15 +44,16 @@ beans = parse_json_to_bean(json_data)
 
 
 def process_image(image_path):
-    preprocessor = ImagePreprocessor()
-    processed_image_path = preprocessor.preprocess_image(image_path)
+    # preprocessor = ImagePreprocessor()
+    # processed_image_path = preprocessor.preprocess_image(image_path)
 
-    # image = cv2.imread(image_path)
-    # processed_image_path = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.imread(image_path)
+    processed_image_path = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return processed_image_path
 
 
 processed_image_path = process_image(img_path)
+fetch_value_using_coordinates(processed_image_path, beans)
 
-for bean in beans:
-    fetch_value_using_coordinates(processed_image_path, bean)
+# for bean in beans:
+#     fetch_value_using_coordinates(processed_image_path, bean)
