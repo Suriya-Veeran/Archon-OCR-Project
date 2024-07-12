@@ -22,8 +22,12 @@ def is_bounding_box_within(bounding_box, position: ColumnPosition):
     pos_width = position.width
     pos_height = position.height
 
-    return (x1 >= pos_x and x2 <= pos_x + pos_width and
-            y1 >= pos_y and y2 <= pos_y + pos_height)
+    x = x1 >= pos_x
+    y = y1 >= pos_y
+    width = x2 <= pos_x + pos_width
+    height = y2 <= pos_y + pos_height
+
+    return x and width and y and height
 
 
 def get_position_values(bbox):
@@ -40,6 +44,7 @@ def get_position_values(bbox):
 def prepare_response(binding_name, value):
     response = Response(binding_name, value)
     print("Response ---->", response)
+    return response
 
 
 def write_to_csv(data, output_file='../output_sample.csv'):
