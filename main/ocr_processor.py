@@ -1,13 +1,12 @@
 import logging
 import os
-from fileinput import filename
 
 import cv2
 from paddleocr import PaddleOCR
 
 from pre_processing import start_pre_process
 from utils import (is_bounding_box_within,
-                   get_position_values, write_to_csv, retrieve_results, parse_json_to_beans)
+                   get_position_values, retrieve_results, parse_json_to_beans)
 
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger('ppocr')
@@ -41,7 +40,8 @@ def start_process(image_path, beans,file_name):
 
 def fetch_values(img, beans, image_name):
     thresh = 255 - cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    ocr = PaddleOCR(use_angle_cls=True, lang='en')
+    ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=False)
+    # use_gpu=False  -> for windows
 
     final_result_list = []
 
@@ -51,7 +51,7 @@ def fetch_values(img, beans, image_name):
     over_all_content: str = ""
     for res in result[0]:
         bbox = res[0]
-        over_all_content = over_all_content.join(res[1][0]).join(" ")
+        over_all_content = " ".join([over_all_content, res[1][0]])
         for bean in beans:
             if is_bounding_box_within(bbox, bean.position):
 
