@@ -13,7 +13,9 @@ logger = logging.getLogger('ppocr')
 logger.setLevel(logging.ERROR)
 
 
-def process_input_folder(folder_path, image_folder, json_data):
+def process_input_folder(folder_path,
+                         image_folder,
+                         json_data):
     results = []
     for file_name in os.listdir(image_folder):
         if file_name.lower().endswith(('.png', '.jpg', '.jpeg')):
@@ -28,17 +30,19 @@ def process_input_folder(folder_path, image_folder, json_data):
     return results
 
 
-def start_process(image_path, beans,file_name):
+def start_process(image_path,
+                  beans):
     image = cv2.imread(image_path)
     processed_image = start_pre_process(image)
 
     # write sample data for testing
     cv2.imwrite("./test.png", processed_image)
 
-    return fetch_values(processed_image, beans, file_name)
+    return fetch_values(processed_image, beans)
 
 
-def fetch_values(img, beans, image_name):
+def fetch_values(img,
+                 beans):
     thresh = 255 - cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=False)
     # use_gpu=False  -> for windows
@@ -46,12 +50,9 @@ def fetch_values(img, beans, image_name):
     final_result_list = []
 
     result = retrieve_results(thresh, ocr)
-    # print sample result
     print(result)
-    over_all_content: str = ""
     for res in result[0]:
         bbox = res[0]
-        over_all_content = " ".join([over_all_content, res[1][0]])
         for bean in beans:
             if is_bounding_box_within(bbox, bean.position):
 
@@ -70,4 +71,4 @@ def fetch_values(img, beans, image_name):
                         final_result = {'binding_name': bean.column_name, 'value': value}
                         final_result_list.append(final_result)
     print(final_result_list)
-    return final_result_list, over_all_content
+    return final_result_list

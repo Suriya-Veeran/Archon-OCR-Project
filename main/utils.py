@@ -13,7 +13,8 @@ def parse_json_to_beans(json_data):
     return beans
 
 
-def is_bounding_box_within(bounding_box, position: ColumnPosition):
+def is_bounding_box_within(bounding_box,
+                           position: ColumnPosition):
     x1, y1 = bounding_box[0]
     x2, y2 = bounding_box[3]
 
@@ -41,7 +42,8 @@ def get_position_values(bbox):
     return width_position, height_position, top_position, left_position
 
 
-def prepare_response(binding_name, value):
+def prepare_response(binding_name,
+                     value):
     response = Response(binding_name, value)
     print("Response ---->", response)
     return response
