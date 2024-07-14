@@ -54,7 +54,7 @@ def fetch_values_from_paddle_ocr(img,
         for bean in beans:
             if is_bounding_box_within(bbox, bean.position) and res[0] and res[1]:
                 accuracy = res[1][1]
-                if accuracy > 0.75:
+                if accuracy > 0.50:
                     value = res[1][0]
                     final_result = {'binding_name': bean.column_name, 'value': value}
                     final_result_list.append(final_result)
