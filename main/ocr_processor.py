@@ -35,9 +35,13 @@ def start_process(image_path,
     image = cv2.imread(image_path)
     processed_image = start_pre_process(image)
 
-    cv2.imwrite("./test.png", processed_image)
+    sample_write_img(processed_image)
 
     return fetch_values_from_paddle_ocr(processed_image, beans)
+
+
+def sample_write_img(processed_image):
+    cv2.imwrite("../sample.png", processed_image)
 
 
 def fetch_values_from_paddle_ocr(img,
