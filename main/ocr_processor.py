@@ -20,9 +20,9 @@ def process_input_folder(folder_path, image_folder, json_data):
             image_path = os.path.join(folder_path, file_name)
 
             input_beans = parse_json_to_beans(json_data)
-            final_result_list, over_all_content = start_process(image_path, input_beans,file_name)
+            final_result_list = start_process(image_path, input_beans, file_name)
 
-            single_image_result = {'image_results': final_result_list, 'over_all_content': over_all_content}
+            single_image_result = {"fileName": file_name, 'field_results': final_result_list}
 
             results.append(single_image_result)
     return results
@@ -67,7 +67,7 @@ def fetch_values(img, beans, image_name):
                     accuracy = ocr_res[0][0][1][1]
                     if accuracy > 0.75:
                         value = ocr_res[0][0][1][0]
-                        final_result = {'binding_name': bean.column_name, 'value': value, 'image_name': image_name}
+                        final_result = {'binding_name': bean.column_name, 'value': value}
                         final_result_list.append(final_result)
     print(final_result_list)
     return final_result_list, over_all_content
