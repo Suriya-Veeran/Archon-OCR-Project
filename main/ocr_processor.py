@@ -8,6 +8,8 @@ from pre_processing import start_pre_process
 from utils import (is_bounding_box_within,
                    retrieve_results, parse_json_to_beans)
 
+import base64
+
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger('ppocr')
 logger.setLevel(logging.ERROR)
@@ -22,18 +24,19 @@ def process_input_folder(folder_path,
             image_path = os.path.join(folder_path, file_name)
 
             input_beans = parse_json_to_beans(json_data)
-            final_result_list = start_process(image_path, input_beans)
+            image = cv2.imread(image_path)
+            processed_image = start_pre_process(image)
+            final_result_list = start_process(input_beans, processed_image)
 
-            single_image_result = {"fileName": file_name, 'field_results': final_result_list}
+            png_img = cv2.imencode('.png', processed_image)
+            b64_string = base64.b64encode(png_img[1]).decode('utf-8')
+            single_image_result = {"fileName": file_name, 'field_results': final_result_list, "fileContent": b64_string}
 
             results.append(single_image_result)
     return results
 
 
-def start_process(image_path,
-                  beans):
-    image = cv2.imread(image_path)
-    processed_image = start_pre_process(image)
+def start_process(beans, processed_image):
 
     sample_write_img(processed_image)
 
