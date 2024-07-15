@@ -18,7 +18,7 @@ def process_input_with_model():
     try:
         image_folder = data['folder_path']
         results = process_input_folder(folder_path, image_folder, json_data)
-        return jsonify("imageResponse", results)
+        return jsonify(results)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
