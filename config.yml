@@ -1,0 +1,9 @@
+
+database:
+  username: 'adsuser'
+  password: 'AdS%403421'
+  host: 'localhost'
+  port: 5432
+  db_name: 'python-db'
+  track_modifications: False
+
