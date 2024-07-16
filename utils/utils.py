@@ -1,16 +1,6 @@
 import csv
-from models import ColumnPosition, Bean, Response
 
-
-def parse_json_to_beans(json_data):
-    beans = []
-    for item in json_data:
-        column_name = item["columnName"]
-        position_data = item["position"]
-        position = ColumnPosition(**position_data)
-        bean = Bean(column_name, position)
-        beans.append(bean)
-    return beans
+from bean.beans import ColumnPosition
 
 
 def is_bounding_box_within(bounding_box,
@@ -40,13 +30,6 @@ def get_position_values(bbox):
     top_position = int(min(y_coords))
     left_position = int(min(x_coords))
     return width_position, height_position, top_position, left_position
-
-
-def prepare_response(binding_name,
-                     value):
-    response = Response(binding_name, value)
-    print("Response ---->", response)
-    return response
 
 
 def write_to_csv(data, output_file='../output_sample.csv'):
